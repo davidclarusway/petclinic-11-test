@@ -161,7 +161,7 @@ resource "aws_instance" "kube-master" {
     subnet_id = "subnet-c41ba589"  # select own subnet_id of us-east-1a
     availability_zone = "us-east-1a"
     tags = {
-        Name = "kube-master"
+        Name = "david-kube-master"
         "kubernetes.io/cluster/petclinicCluster" = "owned"
         Project = "tera-kube-ans"
         Role = "master"
@@ -179,7 +179,7 @@ resource "aws_instance" "worker-1" {
     subnet_id = "subnet-c41ba589"  # select own subnet_id of us-east-1a
     availability_zone = "us-east-1a"
     tags = {
-        Name = "worker-1"
+        Name = "david-worker-1"
         "kubernetes.io/cluster/petclinicCluster" = "owned"
         Project = "tera-kube-ans"
         Role = "worker"
@@ -197,7 +197,7 @@ resource "aws_instance" "worker-2" {
     subnet_id = "subnet-c41ba589"  # select own subnet_id of us-east-1a
     availability_zone = "us-east-1a"
     tags = {
-        Name = "worker-2"
+        Name = "david-worker-2"
         "kubernetes.io/cluster/petclinicCluster" = "owned"
         Project = "tera-kube-ans"
         Role = "worker"
