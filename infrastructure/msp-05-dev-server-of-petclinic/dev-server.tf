@@ -1,4 +1,4 @@
-//This Terraform template prepares development environment for Petclinic Microservices Application.
+//This Terraform template prepares a development environment for Petclinic Microservices Application.
 //User needs to select appropriate key name when launching the template.
 
 provider "aws" {

@@ -7,15 +7,15 @@ module "iam" {
 }
 
 variable "sec-gr-mutual" {
-  default = "petclinic-k8s-mutual-sec-group"
+  default = "petclinic-k8s-mutual-sec-group-detr"
 }
 
 variable "sec-gr-k8s-master" {
-  default = "petclinic-k8s-master-sec-group"
+  default = "petclinic-k8s-master-sec-group-detr"
 }
 
 variable "sec-gr-k8s-worker" {
-  default = "petclinic-k8s-worker-sec-group"
+  default = "petclinic-k8s-worker-sec-group-detr"
 }
 
 data "aws_vpc" "name" {
@@ -91,7 +91,6 @@ resource "aws_security_group" "petclinic-kube-master-sg" {
     from_port = 6443
     to_port = 6443
     cidr_blocks = ["0.0.0.0/0"]
-    #security_groups = [aws_security_group.petclinic-mutual-sg.id]
   }
   ingress {
     protocol = "tcp"
@@ -119,15 +118,15 @@ resource "aws_security_group" "petclinic-kube-master-sg" {
   }
   ingress {
     protocol = "tcp"
-    from_port = 10251
-    to_port = 10251
-    security_groups = [aws_security_group.petclinic-mutual-sg.id]
+    from_port = 10257
+    to_port = 10257
+    self = true
   }
   ingress {
     protocol = "tcp"
-    from_port = 10252
-    to_port = 10252
-    security_groups = [aws_security_group.petclinic-mutual-sg.id]
+    from_port = 10259
+    to_port = 10259
+    self = true
   }
   ingress {
     protocol = "tcp"
@@ -161,13 +160,14 @@ resource "aws_instance" "kube-master" {
     subnet_id = "subnet-c41ba589"  # select own subnet_id of us-east-1a
     availability_zone = "us-east-1a"
     tags = {
-        Name = "david-kube-master"
+        Name = "kube-master"
         "kubernetes.io/cluster/petclinicCluster" = "owned"
         Project = "tera-kube-ans"
         Role = "master"
         Id = "1"
         environment = "dev"
     }
+
 }
 
 resource "aws_instance" "worker-1" {
@@ -179,7 +179,7 @@ resource "aws_instance" "worker-1" {
     subnet_id = "subnet-c41ba589"  # select own subnet_id of us-east-1a
     availability_zone = "us-east-1a"
     tags = {
-        Name = "david-worker-1"
+        Name = "worker-1"
         "kubernetes.io/cluster/petclinicCluster" = "owned"
         Project = "tera-kube-ans"
         Role = "worker"
@@ -197,7 +197,7 @@ resource "aws_instance" "worker-2" {
     subnet_id = "subnet-c41ba589"  # select own subnet_id of us-east-1a
     availability_zone = "us-east-1a"
     tags = {
-        Name = "david-worker-2"
+        Name = "worker-2"
         "kubernetes.io/cluster/petclinicCluster" = "owned"
         Project = "tera-kube-ans"
         Role = "worker"
